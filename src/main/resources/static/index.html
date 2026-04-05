@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compras de Casa</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 50px 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            width: 100%;
+            max-width: 800px; /* Aumentei aqui para a tela não ficar pequena */
+        }
+
+        h2 {
+            color: #1c1e21;
+            font-size: 28px;
+            margin-bottom: 30px;
+            text-align: left;
+            border-left: 5px solid #28a745;
+            padding-left: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 35px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        input {
+            padding: 15px;
+            border: 2px solid #e4e6eb;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input:focus { border-color: #28a745; }
+
+        input[id="nome"] { flex: 3; }
+        input[id="qtd"] { flex: 1; }
+
+        button {
+            padding: 0 30px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: transform 0.1s, background 0.2s;
+        }
+
+        button:hover { background-color: #218838; }
+        button:active { transform: scale(0.98); }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            color: #65676b;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid #f0f2f5;
+        }
+
+        td {
+            padding: 20px 15px;
+            border-bottom: 1px solid #f0f2f5;
+            color: #1c1e21;
+            font-size: 17px;
+        }
+
+        tr:hover { background-color: #fcfcfc; }
+
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Controle de estoque de produtos da casa</h2>
+
+    <div class="form-group">
+        <input type="text" id="nome" placeholder="Nome do produto">
+        <input type="number" id="qtd" placeholder="Quantidade">
+        <button onclick="salvar()">Adicionar Item</button>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Produto</th>
+            <th>Quantidade Atual</th>
+        </tr>
+        </thead>
+        <tbody id="tabelaBody">
+        </tbody>
+    </table>
+</div>
+
+<script>
+    const API_URL = '/api/produtos';
+
+    async function carregarProdutos() {
+        try {
+            const resposta = await fetch(API_URL);
+            const produtos = await resposta.json();
+            const tabela = document.getElementById('tabelaBody');
+            tabela.innerHTML = '';
+
+            produtos.forEach(p => {
+                const linha = document.createElement('tr');
+                linha.innerHTML = `
+                    <td><strong>${p.nome}</strong></td>
+                    <td>${p.quantidade}</span></td>
+                `;
+                tabela.appendChild(linha);
+            });
+        } catch (erro) {
+            console.error("Erro ao carregar:", erro);
+        }
+    }
+
+    async function salvar() {
+        const nomeInput = document.getElementById('nome');
+        const qtdInput = document.getElementById('qtd');
+
+        if (!nomeInput.value || !qtdInput.value) {
+            alert("Por favor, preencha o nome e a quantidade!");
+            return;
+        }
+
+        const dados = {
+            nome: nomeInput.value,
+            quantidade: parseInt(qtdInput.value)
+        };
+
+        try {
+            await fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+
+            nomeInput.value = '';
+            qtdInput.value = '';
+            carregarProdutos();
+        } catch (erro) {
+            alert("Erro ao salvar o produto.");
+        }
+    }
+
+    // Carrega a lista assim que abrir a página
+    carregarProdutos();
+</script>
+
+</body>
+</html>

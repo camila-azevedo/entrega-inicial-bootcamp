@@ -1,33 +1,31 @@
 package com.example.githubentregainicial;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/produtos")
-@CrossOrigin(origins = "*")
 public class ControladorProduto {
-    private static List<Produto> listaDeCompras = new ArrayList<>();
 
-    static {
-        listaDeCompras.add(new Produto("Farinha de Trigo", 1));
-        listaDeCompras.add(new Produto("Manteiga", 1));
-        listaDeCompras.add(new Produto("Chocolate", 0));
-    }
+    @Autowired
+    private PersistenciaProduto persistencia; // Usando o novo nome que você escolheu
 
     @GetMapping
     public List<Produto> listar() {
-        return listaDeCompras;
+        return persistencia.findAll();
     }
 
-    // BOTÃO SALVAR
     @PostMapping
-    public Produto salvar(@RequestBody Produto novoProduto) {
-        listaDeCompras.add(novoProduto);
-        return novoProduto;
+    public Produto salvarOuSubstituir(@RequestBody Produto novoProduto) {
+        // Se achar o nome no banco, substitui a quantidade. Se não, cria um novo.
+        return persistencia.findByNomeIgnoreCase(novoProduto.getNome())
+                .map(produtoExistente -> {
+                    produtoExistente.setQuantidade(novoProduto.getQuantidade());
+                    return persistencia.save(produtoExistente);
+                })
+                .orElseGet(() -> {
+                    return persistencia.save(novoProduto);
+                });
     }
-
-    // Botão
 }
