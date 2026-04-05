@@ -1,23 +1,18 @@
-# Nome do robô
 name: Java CI com Maven
 
-# Quando ele deve agir? (Sempre que houver push na branch main)
 on:
   push:
-    branches: [ "mster" ]
+    branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
 
 jobs:
   build:
-    # O robô vai usar um computador com Linux (Ubuntu)
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Ele "baixa" o seu código no computador virtual
       - uses: actions/checkout@v4
 
-      # 2. Ele instala o Java 17 (ou a versão que você usa)
       - name: Configurar JDK 17
         uses: actions/setup-java@v4
         with:
@@ -25,7 +20,7 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      # 3. Ele roda o Maven para validar o Lint (Checkstyle) e os Testes
-      # O comando 'verify' faz tudo isso de uma vez
-      - name: Rodar Lint e Testes com Maven
-        run: mvn verify
+      # O comando '-DskipTests=false' garante que os testes rodem
+      # O comando 'checkstyle:check' garante o Linting
+      - name: Rodar Lint e Testes
+        run: mvn clean verify
