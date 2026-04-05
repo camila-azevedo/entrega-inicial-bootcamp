@@ -12,9 +12,9 @@ Camila Azevedo
 - O público-alvo é composto por pessoas que fazem as compras da casa.
 
 <h6>Funcionalidades principais: </h6>
-- Cadastrar produto com nome e quantidade;
-- Alterar quantidade de produto (sem a necessidade de um botão diferente para alterar, apenas digitando o nome do produto e a nova quantidade);
-- Visualizar a lista; 
+- Cadastrar produto com nome e quantidade; </br>
+- Alterar quantidade de produto (sem a necessidade de um botão diferente para alterar, apenas digitando o nome do produto e a nova quantidade); </br>
+- Visualizar a lista; </br>
 
 <h6>Tecnologias utilizadas </h6>
 
