@@ -21,6 +21,7 @@ A aplicação foi desenvolvida em nível de frontend, backend e banco de dados, 
 
 
 instruções de instalação;
+- O código está no branch "master"
 instruções de execução;
 instruções para rodar os testes;
 instruções para rodar o lint;
