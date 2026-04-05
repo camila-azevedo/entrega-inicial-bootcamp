@@ -2,8 +2,13 @@
 Camila Azevedo
 Seu README deve conter, no mínimo:
 
-<h6>Nome do projeto: </h6> Controle de estoque de produtos da casa; 
-Descrição do problema real: 
+<h6> <div align="center"> Controle de estoque de produtos da casa  </div> </h6> 
+Controle de estoque de produtos da casa 
+
+
+<h6>Descrição do problema: </h6>
+Pessoas
+
 proposta da solução;
 público-alvo;
 funcionalidades principais;
