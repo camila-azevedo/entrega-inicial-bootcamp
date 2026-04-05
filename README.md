@@ -17,9 +17,9 @@ Camila Azevedo
 - Visualizar a lista; </br>
 
 <h6>Tecnologias utilizadas </h6>
+A aplicação foi desenvolvida em nível de frontend, backend e banco de dados, conectados pelo Spring Boot no Intelijj na versão 17 do Java. As linguagens utilizadas no frontend foram HTML5, CSS e JavaScript. Já o backend foi construído em Java e o Banco de Dados escolhido foi o Postgresql, com acesso pelo DBeaver. 
 
-funcionalidades principais;
-tecnologias utilizadas;
+
 instruções de instalação;
 instruções de execução;
 instruções para rodar os testes;
