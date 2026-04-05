@@ -1,8 +1,9 @@
-# entrega-inicial-bootcamp
+# Desafio: Entrega inicial para a disciplina de Bootcamp II
+Camila Azevedo
 Seu README deve conter, no mínimo:
 
-nome do projeto;
-descrição do problema real;
+<h6>Nome do projeto: </h6> Controle de estoque de produtos da casa; <br/>
+Descrição do problema real: 
 proposta da solução;
 público-alvo;
 funcionalidades principais;
