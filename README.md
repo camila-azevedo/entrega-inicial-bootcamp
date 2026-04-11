@@ -23,29 +23,29 @@
 - A interface gráfica da sua lista de compras aparecerá e você poderá adicionar, editar ou excluir itens. </br>
 
 5. Rodando os testes: </br>
-Via terminal, digite: .\mvnw test; </br>
-Ou, pelo IntelliJ, clique com o botão direito na pasta src/test/java e selecione a opção "Run 'All Tests'"; </br>
+- Via terminal, digite: .\mvnw test; </br>
+- Ou, pelo IntelliJ, clique com o botão direito na pasta src/test/java e selecione a opção "Run 'All Tests'"; </br>
  
 6. Rodando os Testes de Linting: </br>
-Digite no terminal o comando .\mvnw checkstyle:check
-Se o resultado for BUILD SUCCESS, o linting validou que o código segue os padrões de formatação;
-No arquivo pom.xml, dentro da tag <plugins>, o maven-checkstyle-plugin está declarado;
+- Digite no terminal o comando .\mvnw checkstyle:check
+- Se o resultado for BUILD SUCCESS, o linting validou que o código segue os padrões de formatação;
+- No arquivo pom.xml, dentro da tag <plugins>, o maven-checkstyle-plugin está declarado;
 
 7. Verificando a versão atual:
-A versão do projeto é controlada via Maven e está refletida na interface do usuário;
-A versão é 1.0.;
+- A versão do projeto é controlada via Maven e está refletida na interface do usuário;
+- A versão é 1.0.;
 
-8. Verificando as dependências:
-As dependências do projeto estão formalmente declaradas e gerenciadas através do arquivo pom.xml dentro da tag <dependencies>;
-Dependências presente são: 
-spring-boot-starter-web
-spring-boot-starter-data-jpa
-postgresql
-spring-boot-starter-test
+8. Verificando as dependências: </br>
+- As dependências do projeto estão formalmente declaradas e gerenciadas através do arquivo pom.xml dentro da tag <dependencies>;
+- Dependências presente são: 
+      - spring-boot-starter-web
+      - spring-boot-starter-data-jpa
+      - postgresql
+      - spring-boot-starter-test
 
-
+</br>
 9. Verificando os workflows
-Acesse a aba “Actions” no repositório do GitHub
+- Acesse a aba “Actions” no repositório do GitHub; </br>
 
 
 <h2>INSTRUÇÕES DE USO</h2>
