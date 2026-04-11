@@ -53,5 +53,5 @@
 3. Verifique a lista com os produtos já cadastrados. </br> 
 
 </br>
-- Em uma atualização futura, verificaremos a possibilidade de incluir a possibilidade de excluir elemento e de alterar manualmente a quantidade. 
+- Em uma atualização futura, verificaremos a possibilidade de incluir a funcionalidade de excluir elemento e a funcionalidade de alterar manualmente a quantidade. 
 
