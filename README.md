@@ -50,7 +50,7 @@ Acesse a aba “Actions” no repositório do GitHub
 
 
 <h2>INSTRUÇÕES DE USO</h2>
-1. Digite o nome do produto e a quantidade;
-2. Pressione “adicionar”;
-3. Verifique a lista com os produtos já cadastrados. 
+1. Digite o nome do produto e a quantidade; </br>
+2. Pressione “adicionar”; </br>
+3. Verifique a lista com os produtos já cadastrados. </br> 
 
