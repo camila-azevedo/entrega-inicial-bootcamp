@@ -1,33 +1,32 @@
 <h2>INSTRUÇÕES DE COMO INSTALAR E USAR A APLICAÇÃO </h2>
 
-1. Configurando o Banco de Dados:
-É necessário criar os seguintes elementos no banco de dados do SGBD PostgreSQL: 
-banco de dados: db_compras;
-schema: compras;
-tabela: tb_produtos;
-atributos: id_produto, nome_produto, qtd_produto;
-Porém, antes de rodar o projeto, abra o arquivo src/main/resources/application.properties e altere as seguintes linhas com o seu usuário e senha do PostgreSQL local:
-spring.datasource.username=seu_usuario
-spring.datasource.password=sua_senha
+1. Configurando o Banco de Dados:</br>
+- É necessário criar os seguintes elementos no banco de dados do SGBD PostgreSQL: </br>
+    - banco de dados: db_compras;</br>
+    - schema: compras;</br>
+    - tabela: tb_produtos;</br>
+    - atributos: id_produto, nome_produto, qtd_produto;</br>
+- Porém, antes de rodar o projeto, abra o arquivo src/main/resources/application.properties e altere as seguintes linhas com o seu usuário e senha do PostgreSQL local:</br>
+    - spring.datasource.username=seu_usuario</br>
+    - spring.datasource.password=sua_senha </br>
 
-2. Clonando o repositório:
-Abra o terminal da IDE escolhida e digite:
-git clone https://github.com/camila-azevedo/entrega-inicial-bootcamp;
+2. Clonando o repositório: </br>
+- Abra o terminal da IDE escolhida e digite: git clone https://github.com/camila-azevedo/entrega-inicial-bootcamp; </br>
 
-3. Executando a Aplicação:
-Acesse sua IDE de preferência;
-Clique no ícone de executar a aplicação;
+3. Executando a Aplicação: </br>
+- Acesse sua IDE de preferência; </br>
+- Clique no ícone de executar a aplicação; </br>
 
-4. Acessando a Interface:
-Abra o seu navegador de preferência;
-Digite a URL http://localhost:8080/index.html;
-A interface gráfica da sua lista de compras aparecerá e você poderá adicionar, editar ou excluir itens.
+4. Acessando a Interface: </br>
+- Abra o seu navegador de preferência; </br>
+- Digite a URL http://localhost:8080/index.html; </br>
+- A interface gráfica da sua lista de compras aparecerá e você poderá adicionar, editar ou excluir itens. </br>
 
-5. Rodando os testes:
-Via terminal, digite: .\mvnw test;
-Ou, pelo IntelliJ, clique com o botão direito na pasta src/test/java e selecione a opção "Run 'All Tests'";
-
-6. Rodando os Testes de Linting:
+5. Rodando os testes: </br>
+Via terminal, digite: .\mvnw test; </br>
+Ou, pelo IntelliJ, clique com o botão direito na pasta src/test/java e selecione a opção "Run 'All Tests'"; </br>
+ 
+6. Rodando os Testes de Linting: </br>
 Digite no terminal o comando .\mvnw checkstyle:check
 Se o resultado for BUILD SUCCESS, o linting validou que o código segue os padrões de formatação;
 No arquivo pom.xml, dentro da tag <plugins>, o maven-checkstyle-plugin está declarado;
