@@ -42,9 +42,9 @@
       - spring-boot-starter-data-jpa
       - postgresql
       - spring-boot-starter-test
-
 </br>
-9. Verificando os workflows
+
+9. Verificando os workflows </br>
 - Acesse a aba “Actions” no repositório do GitHub; </br>
 
 
