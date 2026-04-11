@@ -15,16 +15,12 @@ Camila Azevedo
 - Cadastrar produto com nome e quantidade; </br>
 - Alterar quantidade de produto (sem a necessidade de um botão diferente para alterar, apenas digitando o nome do produto e a nova quantidade); </br>
 - Visualizar a lista; </br>
+- Numa próxima atualização, vamos inserir a opção manual de alterar a quantidade de produtos e excluir produtos.
 
 <h6>Tecnologias utilizadas </h6>
-A aplicação foi desenvolvida em nível de frontend, backend e banco de dados, conectados pelo Spring Boot no Intelijj na versão 17 do Java. As linguagens utilizadas no frontend foram HTML5, CSS e JavaScript. Já o backend foi construído em Java e o Banco de Dados escolhido foi o Postgresql, com acesso pelo DBeaver. 
+A aplicação foi desenvolvida em nível de frontend, backend e banco de dados, conectados pelo Spring Boot no InteliJ na versão 17 do Java. As linguagens utilizadas no frontend foram HTML5, CSS e JavaScript. Já o backend foi construído em Java e o Banco de Dados escolhido foi o Postgresql, com acesso pelo DBeaver. 
 
-
-instruções de instalação;
+--> Instruções de instalação;
 - O código está no branch "master"
-instruções de execução;
-instruções para rodar os testes;
-instruções para rodar o lint;
-versão atual;
-nome do autor;
-link do repositório público.
+- Instruções de instalação e execução estão no README do branch Master;
+
