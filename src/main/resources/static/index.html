@@ -7,13 +7,22 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
+        html, body {
+            height: 100%;
+        }
+
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background-color: #f0f2f5;
             display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
             justify-content: center;
             align-items: flex-start;
-            min-height: 100vh;
             padding: 50px 20px;
         }
 
@@ -23,7 +32,7 @@
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.08);
             width: 100%;
-            max-width: 800px; /* Aumentei aqui para a tela não ficar pequena */
+            max-width: 800px;
         }
 
         h2 {
@@ -54,7 +63,6 @@
         }
 
         input:focus { border-color: #28a745; }
-
         input[id="nome"] { flex: 3; }
         input[id="qtd"] { flex: 1; }
 
@@ -98,31 +106,49 @@
 
         tr:hover { background-color: #fcfcfc; }
 
+        footer {
+            background-color: #ffffff;
+            padding: 20px 0;
+            text-align: center;
+            border-top: 1px solid #e4e6eb;
+            width: 100%;
+            color: #65676b;
+            font-size: 0.9rem;
+        }
 
+        footer p { margin: 5px 0; }
+        footer strong { color: #28a745; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>Controle de estoque de produtos da casa</h2>
+<main>
+    <div class="container">
+        <h2>Controle de estoque de produtos da casa</h2>
 
-    <div class="form-group">
-        <input type="text" id="nome" placeholder="Nome do produto">
-        <input type="number" id="qtd" placeholder="Quantidade">
-        <button onclick="salvar()">Adicionar Item</button>
+        <div class="form-group">
+            <input type="text" id="nome" placeholder="Nome do produto">
+            <input type="number" id="qtd" placeholder="Quantidade">
+            <button onclick="salvar()">Adicionar Item</button>
+        </div>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Produto</th>
+                <th>Quantidade Atual</th>
+            </tr>
+            </thead>
+            <tbody id="tabelaBody">
+            </tbody>
+        </table>
     </div>
+</main>
 
-    <table>
-        <thead>
-        <tr>
-            <th>Produto</th>
-            <th>Quantidade Atual</th>
-        </tr>
-        </thead>
-        <tbody id="tabelaBody">
-        </tbody>
-    </table>
-</div>
+<footer>
+    <p>Controle de Estoque dos Produtos da Casa &copy; 2026</p>
+    <p><strong>Versão: 1.0</strong></p>
+</footer>
 
 <script>
     const API_URL = '/api/produtos';
@@ -138,7 +164,7 @@
                 const linha = document.createElement('tr');
                 linha.innerHTML = `
                     <td><strong>${p.nome}</strong></td>
-                    <td>${p.quantidade}</span></td>
+                    <td>${p.quantidade}</td>
                 `;
                 tabela.appendChild(linha);
             });
@@ -176,7 +202,6 @@
         }
     }
 
-    // Carrega a lista assim que abrir a página
     carregarProdutos();
 </script>
 
