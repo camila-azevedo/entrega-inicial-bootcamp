@@ -18,7 +18,7 @@ Camila Azevedo
 - Numa próxima atualização, vamos inserir a opção manual de alterar a quantidade de produtos e excluir produtos.
 
 <h6>Tecnologias utilizadas </h6>
-A aplicação foi desenvolvida em nível de frontend, backend e banco de dados, conectados pelo Spring Boot no InteliJ na versão 17 do Java. As linguagens utilizadas no frontend foram HTML5, CSS e JavaScript. Já o backend foi construído em Java e o Banco de Dados escolhido foi o Postgresql, com acesso pelo DBeaver. 
+A aplicação foi desenvolvida em nível de frontend, backend e banco de dados, conectados pelo Spring Boot no InteliJ na versão 17 do Java. As linguagens utilizadas no frontend foram HTML5, CSS e JavaScript. Já o backend foi construído em Java e o Banco de Dados escolhido foi o Postgresql, com acesso pelo DBeaver. </br>
 
 --> Instruções de instalação;
 - O código está no branch "master"
