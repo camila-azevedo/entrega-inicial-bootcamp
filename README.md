@@ -27,5 +27,6 @@ A aplicação foi desenvolvida em nível de frontend, backend e banco de dados, 
 - Instruções de instalação e execução estão no README do branch Master;
 
 --> Versão 2.0;
-- Integração com API de buscar CEP para cadastrar casa; 
+- Integração com API de buscar CEP para cadastrar casa;
+- Em futuras atualizações, será possível simular o frete a partir do CEP.
 
