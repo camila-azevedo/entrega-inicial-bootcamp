@@ -1,5 +1,6 @@
 # Desafio: Entrega inicial para a disciplina de Bootcamp II
 Camila Azevedo
+link para deploy: https://camila-azevedo.github.io/entrega-inicial-bootcamp/
 
 
 <h2> <div align="center"> Controle de estoque de produtos da casa  </div> </h2> 
