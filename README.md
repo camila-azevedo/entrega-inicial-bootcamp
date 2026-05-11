@@ -1,5 +1,5 @@
 # Desafio: Entrega inicial para a disciplina de Bootcamp II
-Camila Azevedo
+Camila Azevedo - Link para deploy: https://camila-azevedo.github.io/entrega-inicial-bootcamp/
 
 
 <h2> <div align="center"> Controle de estoque de produtos da casa  </div> </h2> 
@@ -25,3 +25,6 @@ A aplicação foi desenvolvida em nível de frontend, backend e banco de dados, 
 - O código está no branch "master"
 - Instruções de instalação e execução estão no README do branch Master;
 
+--> Versão 2.0;
+- Integração com API de buscar CEP para cadastrar casa;
+- Em futuras atualizações, será possível simular frete a partir do CEP cadastrado. 
