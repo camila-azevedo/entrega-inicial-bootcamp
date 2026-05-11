@@ -26,3 +26,6 @@ A aplicação foi desenvolvida em nível de frontend, backend e banco de dados, 
 - O código está no branch "master"
 - Instruções de instalação e execução estão no README do branch Master;
 
+--> Versão 2.0;
+- Integração com API de buscar CEP para localizar mercado; 
+
