@@ -164,7 +164,7 @@
             if (dados.erro) {
                 campoResultado.innerText = "CEP não encontrado.";
             } else {
-                campoResultado.innerText = `🛒 Mercado em: ${dados.logradouro}, ${dados.bairro} - ${dados.localidade}/${dados.uf}`;
+                campoResultado.innerText = `Endereço: ${dados.logradouro}, ${dados.bairro} - ${dados.localidade}/${dados.uf}`;
                 console.log("✅ API integrada com sucesso!");
             }
         } catch (erro) {
