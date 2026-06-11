@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compras de Casa - V2.0</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 50px 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            width: 100%;
+            max-width: 800px;
+        }
+
+        h2 {
+            color: #1c1e21;
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-align: left;
+            border-left: 5px solid #28a745;
+            padding-left: 15px;
+        }
+
+        .versao { font-size: 12px; color: #65676b; margin-bottom: 25px; padding-left: 20px; }
+
+        /* Estilo para a seção de CEP */
+        .cep-container {
+            background: #e7f3ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #bbdefb;
+        }
+
+        .info-local { color: #007bff; font-weight: bold; margin-top: 10px; display: block; }
+
+        .form-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 35px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        input {
+            padding: 15px;
+            border: 2px solid #e4e6eb;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input:focus { border-color: #28a745; }
+        .input-cep { flex: 2; }
+        input[id="nome"] { flex: 3; }
+        input[id="qtd"] { flex: 1; }
+
+        button {
+            padding: 0 30px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: transform 0.1s, background 0.2s;
+        }
+
+        .btn-azul { background-color: #007bff; }
+        .btn-azul:hover { background-color: #0056b3; }
+        button:hover { background-color: #218838; }
+        button:active { transform: scale(0.98); }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            color: #65676b;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid #f0f2f5;
+        }
+
+        td {
+            padding: 20px 15px;
+            border-bottom: 1px solid #f0f2f5;
+            color: #1c1e21;
+            font-size: 17px;
+        }
+
+        tr:hover { background-color: #fcfcfc; }
+
+        footer {
+            background-color: #ffffff;
+            padding: 20px 0;
+            text-align: center;
+            border-top: 1px solid #e4e6eb;
+            width: 100%;
+            color: #65676b;
+            font-size: 0.9rem;
+        }
+
+        footer p { margin: 5px 0; }
+        footer strong { color: #28a745; }
+    </style>
+</head>
+<body>
+
+<main>
+    <div class="container">
+        <h2>Controle de estoque de produtos da casa</h2>
+        <p class="versao">Versão 2.0 - Integração ViaCEP & Supabase</p>
+
+        <div class="cep-container">
+            <p style="margin-bottom: 10px; font-weight: bold; color: #444;">📍 Cadastre o endereço da sua casa pelo CEP</p>
+            <div style="display: flex; gap: 10px;">
+                <input type="text" id="cepInput" class="input-cep" placeholder="Digite o CEP (ex: 01001000)">
+                <button class="btn-azul" onclick="buscarCEP()">Buscar Endereço</button>
+            </div>
+            <span id="resultadoCep" class="info-local">Informe o CEP para ver o endereço.</span>
+        </div>
+
+        <div class="form-group">
+            <input type="text" id="nome" placeholder="Nome do produto">
+            <input type="number" id="qtd" placeholder="Quantidade">
+            <button onclick="salvar()">Adicionar Item</button>
+        </div>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Produto</th>
+                <th>Quantidade Atual</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody id="tabelaBody">
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<footer>
+    <p>Controle de Estoque dos Produtos da Casa &copy; 2026</p>
+    <p><strong>Versão: 2.0</strong></p>
+</footer>
+
+<script>
+    // --- SUAS CREDENCIAIS DO SUPABASE ---
+    // VEJA AQUI: Cole a sua Project URL (aquela que começa com https://) dentro das aspas abaixo:
+    const SUPABASE_URL = 'COLE_AQUI_A_SUA_PROJECT_URL'; 
+    const SUPABASE_KEY = 'sb_publishable_48OVvjqUVQl2GALFevpPGw_jp64Bn19';
+    
+    // Inicializa o cliente do Supabase
+    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // --- LÓGICA DA API EXTERNA (VIACEP) ---
+    async function buscarCEP() {
+        const cep = document.getElementById('cepInput').value.replace(/\D/g, '');
+        const campoResultado = document.getElementById('resultadoCep');
+
+        if (cep.length !== 8) {
+            alert("CEP inválido! Digite 8 números.");
+            return;
+        }
+
+        campoResultado.innerText = "Buscando...";
+
+        try {
+            const resposta = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+            const dados = await resposta.json();
+
+            if (dados.erro) {
+                campoResultado.innerText = "CEP não encontrado.";
+            } else {
+                campoResultado.innerText = `Endereço: ${dados.logradouro}, ${dados.bairro} - ${dados.localidade}/${dados.uf}`;
+                console.log("✅ API ViaCEP integrada com sucesso!");
+            }
+        } catch (erro) {
+            campoResultado.innerText = "Erro ao conectar na API de CEP.";
+        }
+    }
+
+    // --- LÓGICA DO BANCO DE DADOS (SUPABASE) ---
+    async function carregarProdutos() {
+        try {
+            // Busca os dados mapeando o schema 'compras' e a tabela 'tb_produto'
+            const { data: produtos, error } = await _supabase
+                .schema('compras')
+                .from('tb_produto')
+                .select('*')
+                .order('id_produto', { ascending: false });
+
+            if (error) throw error;
+
+            const tabela = document.getElementById('tabelaBody');
+            tabela.innerHTML = '';
+
+            produtos.forEach(p => {
+                const linha = document.createElement('tr');
+                linha.innerHTML = `
+                    <td><strong>${p.nome_produto}</strong></td>
+                    <td>${p.qtd_produto}</td>
+                    <td>
+                        <button onclick="remover(${p.id_produto})" style="padding: 5px 15px; background: #ff4d4d; font-size: 12px;">Remover</button>
+                    </td>
+                `;
+                tabela.appendChild(linha);
+            });
+        } catch (erro) {
+            console.error("Erro ao carregar do Supabase:", erro);
+        }
+    }
+
+    async function salvar() {
+        const nomeInput = document.getElementById('nome');
+        const qtdInput = document.getElementById('qtd');
+
+        if (!nomeInput.value || !qtdInput.value) {
+            alert("Por favor, preencha o nome e a quantidade!");
+            return;
+        }
+
+        try {
+            // Insere os registros usando as colunas exatas do seu PostgreSQL
+            const { error } = await _supabase
+                .schema('compras')
+                .from('tb_produto')
+                .insert([
+                    { nome_produto: nomeInput.value, qtd_produto: parseInt(qtdInput.value) }
+                ]);
+
+            if (error) throw error;
+
+            nomeInput.value = '';
+            qtdInput.value = '';
+            carregarProdutos(); // Atualiza a lista na tela
+        } catch (erro) {
+            alert("Erro ao salvar o produto no Supabase.");
+            console.error(erro);
+        }
+    }
+
+    async function remover(id) {
+        try {
+            const { error } = await _supabase
+                .schema('compras')
+                .from('tb_produto')
+                .delete()
+                .eq('id_produto', id);
+
+            if (error) throw error;
+            carregarProdutos(); // Recarrega após deletar
+        } catch (erro) {
+            console.error("Erro ao remover produto:", erro);
+        }
+    }
+
+    // TESTE DE INTEGRAÇÃO (ViaCEP)
+    (async function testarIntegracao() {
+        try {
+            const res = await fetch('https://viacep.com.br/ws/01001000/json/');
+            if(res.ok) console.log("✅ TESTE DE INTEGRAÇÃO PASSOU: API ViaCEP está online.");
+        } catch (e) {
+            console.error("❌ TESTE DE INTEGRAÇÃO FALHOU");
+        }
+    })();
+
+    // Início automático ao carregar a página
+    carregarProdutos();
+</script>
+
+</body>
+</html>
