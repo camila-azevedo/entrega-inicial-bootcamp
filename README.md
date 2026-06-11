@@ -29,3 +29,7 @@ A aplicação foi desenvolvida em nível de frontend, backend e banco de dados, 
 - Integração com API de buscar CEP para cadastrar casa;
 - Em futuras atualizações, será possível simular o frete a partir do CEP.
 
+--> Versão 3.0;
+- Integração com SupaBase de banco de dados;
+- Agora não é mais necessário criar o banco localmente.
+
