@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compras de Casa - V3.0</title>
+    <title>Compras de Casa - V3.0 (Dark Mode)</title>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -16,9 +16,10 @@
 
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #dcb2a4;
+            background-color: #371057; /* Fundo base clássico da V2 */
             display: flex;
             flex-direction: column;
+            transition: background-color 0.3s;
         }
 
         main {
@@ -33,9 +34,10 @@
             background: white;
             padding: 40px;
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 30px rgb(196, 151, 234);
             width: 100%;
             max-width: 800px;
+            transition: background 0.3s, color 0.3s;
         }
 
         h2 {
@@ -43,7 +45,7 @@
             font-size: 28px;
             margin-bottom: 10px;
             text-align: left;
-            border-left: 5px solid #28a745;
+            border-left: 5px solid #c497ea;
             padding-left: 15px;
         }
 
@@ -51,14 +53,15 @@
 
         /* Estilo para a seção de CEP */
         .cep-container {
-            background: #e7f3ff;
+            background: #c9dde8;
             padding: 20px;
             border-radius: 10px;
             margin-bottom: 20px;
-            border: 1px solid #bbdefb;
+            border: 1px solid #ded9ee;
+            transition: background 0.3s, border-color 0.3s;
         }
 
-        .info-local { color: #007bff; font-weight: bold; margin-top: 10px; display: block; }
+        .info-local { color: #371057; font-weight: bold; margin-top: 10px; display: block; }
 
         .form-group {
             display: flex;
@@ -67,6 +70,7 @@
             background: #f8f9fa;
             padding: 20px;
             border-radius: 10px;
+            transition: background 0.3s;
         }
 
         input {
@@ -75,7 +79,7 @@
             border-radius: 8px;
             font-size: 16px;
             outline: none;
-            transition: border-color 0.2s;
+            transition: border-color 0.2s, background 0.3s, color 0.3s;
         }
 
         input:focus { border-color: #28a745; }
@@ -136,18 +140,20 @@
         }
 
         footer p { margin: 5px 0; }
-        footer strong { color: #28a745; }
+        footer strong { color: #371057; }
     </style>
 </head>
 <body>
 
 <main>
     <div class="container">
+        <button onclick="toggleDarkMode()" class="btn-azul" style="float: right; padding: 6px 12px; font-size: 13px; margin-top: 5px;">🌓 Modo Escuro</button>
+
         <h2>Controle de estoque de produtos da casa</h2>
         <p class="versao">Versão 3.0 - Integração ViaCEP & Supabase</p>
 
         <div class="cep-container">
-            <p style="margin-bottom: 10px; font-weight: bold; color: #444;">📍 Cadastre o endereço da sua casa pelo CEP</p>
+            <p id="cepTextoAnuncio" style="margin-bottom: 10px; font-weight: bold; color: #444;">📍 Cadastre o endereço da sua casa pelo CEP</p>
             <div style="display: flex; gap: 10px;">
                 <input type="text" id="cepInput" class="input-cep" placeholder="Digite o CEP (ex: 01001000)">
                 <button class="btn-azul" onclick="buscarCEP()">Buscar Endereço</button>
@@ -177,7 +183,7 @@
 
 <footer>
     <p>Controle de Estoque dos Produtos da Casa &copy; 2026</p>
-    <p><strong>Versão: 2.0</strong></p>
+    <p><strong>Versão: 3.0</strong></p>
 </footer>
 
 <script>
@@ -218,7 +224,6 @@
     // --- LÓGICA DO BANCO DE DADOS (SUPABASE - SCHEMA PUBLIC) ---
     async function carregarProdutos() {
         try {
-            // Conecta diretamente à tabela tb_produto agora movida para o schema public
             const { data: produtos, error } = await _supabase
                 .from('tb_produto')
                 .select('*')
@@ -241,6 +246,12 @@
                 `;
                 tabela.appendChild(linha);
             });
+
+            // Re-aplica a verificação de cor caso a tabela mude enquanto estiver no Modo Escuro
+            const container = document.querySelector('.container');
+            if (container.style.background === 'rgb(43, 43, 43)') {
+                document.querySelectorAll('#tabelaBody td, #tabelaBody strong').forEach(el => el.style.color = '#ffffff');
+            }
         } catch (erro) {
             console.error("Erro ao carregar do Supabase:", erro);
         }
@@ -256,7 +267,6 @@
         }
 
         try {
-            // Envia os dados estruturados usando os campos do seu PostgreSQL original
             const { error } = await _supabase
                 .from('tb_produto')
                 .insert([
@@ -267,7 +277,7 @@
 
             nomeInput.value = '';
             qtdInput.value = '';
-            carregarProdutos(); // Atualiza a tabela dinamicamente
+            carregarProdutos(); 
         } catch (erro) {
             alert("Erro ao salvar o produto no Supabase.");
             console.error(erro);
@@ -307,7 +317,7 @@
                 .eq('id_produto', id);
 
             if (error) throw error;
-            carregarProdutos(); // Atualiza após apagar
+            carregarProdutos(); 
         } catch (erro) {
             console.error("Erro ao remover produto:", erro);
         }
@@ -325,6 +335,37 @@
 
     // Executa a busca automática assim que a tela abre
     carregarProdutos();
+
+    // --- FUNÇÃO DO MODO ESCURO (Aprimorada para contemplar novos elementos) ---
+    function toggleDarkMode() {
+        const container = document.querySelector('.container');
+        const cepContainer = document.querySelector('.cep-container');
+        const formGroup = document.querySelector('.form-group');
+        const cepTextoAnuncio = document.getElementById('cepTextoAnuncio');
+        const estaEscuro = container.style.background === 'rgb(43, 43, 43)';
+
+        // Altera as cores do painel principal
+        container.style.background = estaEscuro ? 'white' : '#2b2b2b';
+        container.style.color = estaEscuro ? '#1c1e21' : 'white';
+
+        // Altera sub-containers internos
+        cepContainer.style.background = estaEscuro ? '#c9dde8' : '#3c4043';
+        cepContainer.style.borderColor = estaEscuro ? '#ded9ee' : '#5f6368';
+        formGroup.style.background = estaEscuro ? '#f8f9fa' : '#35373a';
+        if (cepTextoAnuncio) cepTextoAnuncio.style.color = estaEscuro ? '#444' : '#fff';
+
+        // Ajusta as caixas de inputs de texto
+        document.querySelectorAll('input').forEach(input => {
+            input.style.background = estaEscuro ? '#ffffff' : '#4e5154';
+            input.style.color = estaEscuro ? '#000000' : '#ffffff';
+            input.style.borderColor = estaEscuro ? '#e4e6eb' : '#5f6368';
+        });
+
+        // Altera todos os textos de cabeçalhos e tabelas de forma dinâmica
+        document.querySelectorAll('h2, th, td, tr td strong').forEach(el => {
+            el.style.color = estaEscuro ? '' : '#ffffff';
+        });
+    }
 </script>
 
 </body>
