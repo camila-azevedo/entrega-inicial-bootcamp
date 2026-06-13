@@ -30,6 +30,7 @@ A aplicação foi desenvolvida em nível de frontend, backend e banco de dados, 
 - Em futuras atualizações, será possível simular o frete a partir do CEP.
 
 --> Versão 3.0;
-- Integração com SupaBase de banco de dados;
-- Agora não é mais necessário criar o banco localmente.
+- Integração com SupaBase de banco de dados, agora não é mais necessário criar o banco localmente;
+- Foi incluída a funcionalidade de alterar quantidade de itens;
+- Foi incluído o modo escuro (dark mode).
 
