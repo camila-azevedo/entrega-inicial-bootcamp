@@ -235,6 +235,7 @@
                     <td><strong>${p.nome_produto}</strong></td>
                     <td>${p.qtd_produto}</td>
                     <td>
+                        <button onclick="editarQuantidade(${p.id_produto}, ${p.qtd_produto})" style="padding: 5px 15px; background: #007bff; font-size: 12px; color: white; border: none; border-radius: 4px; cursor: pointer; margin-right: 5px;">Editar Qtd</button>
                         <button onclick="remover(${p.id_produto})" style="padding: 5px 15px; background: #ff4d4d; font-size: 12px; color: white; border: none; border-radius: 4px; cursor: pointer;">Remover</button>
                     </td>
                 `;
@@ -269,6 +270,31 @@
             carregarProdutos(); // Atualiza a tabela dinamicamente
         } catch (erro) {
             alert("Erro ao salvar o produto no Supabase.");
+            console.error(erro);
+        }
+    }
+
+    async function editarQuantidade(id, qtdAtual) {
+        const novaQtd = prompt("Digite a nova quantidade:", qtdAtual);
+
+        if (novaQtd === null) return;
+
+        const quantidade = parseInt(novaQtd);
+        if (isNaN(quantidade) || quantidade < 0) {
+            alert("Quantidade inválida! Digite um número válido.");
+            return;
+        }
+
+        try {
+            const { error } = await _supabase
+                .from('tb_produto')
+                .update({ qtd_produto: quantidade })
+                .eq('id_produto', id);
+
+            if (error) throw error;
+            carregarProdutos();
+        } catch (erro) {
+            alert("Erro ao atualizar a quantidade do produto.");
             console.error(erro);
         }
     }
